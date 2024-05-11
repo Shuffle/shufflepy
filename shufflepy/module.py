@@ -35,6 +35,7 @@ class Shuffle():
         if not action:
             raise ValueError("action is required. Example: action=\"list_tickets\"")
 
+
         self.config["category"] = category
         requestdata = {
             "action": action,
