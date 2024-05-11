@@ -1,3 +1,16 @@
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+[project]
+name="shufflepy"
+description="Connect to your favorite services with a single line of code. "
+version="0.0.1"
+dependencies=[
+	"requests"
+]
+requires-python=">= 3.6"
+authors=[
+  {name="Frikky", email="support@shuffler.io"}
+]
+maintainers=[
+  {name="Frikky", email="support@shuffler.io"}
+]
+readme="README.md"
+keywords=["automate", "api", "rest", "requests", "http", "client", "integration", "shuffle", "shuffler", "shuffler.io"]
