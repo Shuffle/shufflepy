@@ -1,5 +1,5 @@
 # Shufflepy
-Connect to your favorite services with a single line of code. The library does NOT contain any
+Connect to your favorite services with a single line of code. 
 
 **This Library is in an Experimental Phase**
 
