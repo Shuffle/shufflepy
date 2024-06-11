@@ -24,13 +24,19 @@ shuffle.config(
 
 ## Usage
 ```python
+# General connect
 tickets = shuffle.connect(
 	app='jira', 
 	action='list_tickets',
 )
+# Returns output according to the 'list_tickets' action
+print(tickets)
+
+# General transformer - Transforms from any data into a standard, e.g. "list_tickets"
+sourcedata = [{"title": "Tickettitle", "id": "hiya"}]
+tickets = shuffle.transform(sourcedata, "list_tickets")
 
 print(tickets)
-# Returns output according to the 'list_tickets' action
 ```
 
 Basic output for `list_tickets`: 
