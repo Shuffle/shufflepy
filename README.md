@@ -24,13 +24,22 @@ shuffle = Shuffle(
 - Having an active authentication for the service you are trying to connect to in Shuffle, whether in your own instance or in the Shuffle cloud: [https://shuffler.io](https://shuffler.io/admin?tab=app_auth)
 
 ## Usage
+Premade functions:
+```
+ticket = shuffle.create_ticket("jira")
+
+# Returns the ticket information in a standardized "ticket" format by default
+print(ticket)
+```
+
+Manual:
 ```python
 # General connect
 tickets = shuffle.connect(
 	app='jira', 
 	action='list_tickets',
 )
-# Returns output according to the 'list_tickets' action
+# Returns output according to the 'list_tickets' standard
 print(tickets)
 
 # General transformer - Transforms from any data into a standard, e.g. "list_tickets"
