@@ -9,8 +9,17 @@
 name: Upload Python Package
 
 on:
+  workflow_dispatch:  # Allows the workflow to be run manually from GitHub
+    inputs:
+      version:
+        description: 'Version of the package to publish'
+        required: true
   release:
     types: [published]
+  push:
+    tags:
+      - 'v*'  # Triggers when a version tag is pushed (e.g., v1.0.0)
+
 
 permissions:
   contents: read
@@ -37,6 +46,6 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         verify-metadata: false
-        repository-url: https://pypi.org/legacy/
+        repository-url: https://pypi.org/projects/shufflepy
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
