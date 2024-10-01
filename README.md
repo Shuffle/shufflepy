@@ -25,7 +25,7 @@ shuffle = Shuffle(
 
 ## Usage
 Premade functions:
-```
+```python
 ticket = shuffle.create_ticket("jira")
 
 # Returns the ticket information in a standardized "ticket" format by default
@@ -50,7 +50,7 @@ print(tickets)
 ```
 
 Basic output for `list_tickets`: 
-```
+```json
 [{
   "id": "P-123",
   "title": "Ticket 1"
