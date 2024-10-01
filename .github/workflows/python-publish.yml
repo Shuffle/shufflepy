@@ -37,6 +37,6 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         verify-metadata: false
-        repository-url: https://pypi.org/legacy/
+        repository-url: https://pypi.org/projects/shufflepy
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
