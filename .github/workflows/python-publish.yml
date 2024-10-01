@@ -43,9 +43,12 @@ jobs:
       run: python -m build
       
     - name: Publish package
-      uses: pypa/gh-action-pypi-publish@release/v1
+      uses: pypa/gh-action-pypi-publish@release/v1.10.2
       with:
         verify-metadata: false
-        repository-url: https://pypi.org/projects/shufflepy
+        repository-url: https://upload.pypi.org/legacy/
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+      env:
+        ACTIONS_STEP_DEBUG: true  # Enables debug mode for this step
+
