@@ -120,8 +120,11 @@ if __name__ == "__main__":
         url="http://localhost:5002", # Used for testing
     )
 
-    resp = shuffle.send_message(app="whatsapp")
+    resp = shuffle.list_alerts(app="jira")
     print(resp)
+
+    #resp = shuffle.send_message(app="whatsapp")
+    #print(resp)
 
     #resp = shuffle.send_message(app="discord")
     #print(resp)
