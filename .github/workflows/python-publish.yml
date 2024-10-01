@@ -9,8 +9,13 @@
 name: Upload Python Package
 
 on:
+  workflow_dispatch:  # Allows the workflow to be run manually from GitHub
   release:
-    types: [published]
+    types: [published, manual]
+  push:
+    tags:
+      - 'v*'  # Triggers when a version tag is pushed (e.g., v1.0.0)
+
 
 permissions:
   contents: read
