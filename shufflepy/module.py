@@ -38,7 +38,7 @@ class Shuffle():
 
         return parsedheaders
 
-    def connect(self, category="", app="", action="", org_id="", skip_workflow=True, fields={}):
+    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, fields={}):
         if not category and not app:
             raise ValueError("category or app is required. Example: app=\"ticket\"")
 
