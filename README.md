@@ -24,15 +24,15 @@ shuffle = Shuffle(
 - Having an active authentication for the service you are trying to connect to in Shuffle, whether in your own instance or in the Shuffle cloud: [https://shuffler.io](https://shuffler.io/admin?tab=app_auth)
 
 ## Usage
-Premade functions:
+Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING.
 ```python
-ticket = shuffle.create_ticket("jira")
-
-# Returns the ticket information in a standardized "ticket" format by default
-print(ticket)
+shuffle.create_ticket("jira", title="Title")
+shuffle.send_message("slack", message="Test")
+shuffle.send_message("teams", message="Test")
+shuffle.upload_document("google drive", file_id="x")
 ```
 
-Manual:
+## Manual:
 ```python
 # General connect
 tickets = shuffle.connect(
