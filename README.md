@@ -30,6 +30,7 @@ shuffle.create_ticket("jira", title="Title")
 shuffle.send_message("slack", message="Test")
 shuffle.send_message("teams", message="Test")
 shuffle.upload_document("google drive", file_id="x")
+tickets = shuffle.list_tickets("jira")
 ```
 
 ## Manual:
@@ -38,6 +39,9 @@ shuffle.upload_document("google drive", file_id="x")
 tickets = shuffle.connect(
 	app='jira', 
 	action='list_tickets',
+	fields={
+		"max-amount": 10
+	}
 )
 # Returns output according to the 'list_tickets' standard
 print(tickets)
