@@ -1,1 +1,1 @@
-## Init
+from .module import Shuffle
