@@ -65,6 +65,11 @@ Basic output for `list_tickets`:
 }]
 ```
 
+## Exploring usage
+To look through past executions, see the execution debugger available on [/workflows/debug](https://shuffler.io/workflows/debug)
+<img width="1150" alt="image" src="https://github.com/user-attachments/assets/c0b3d28f-897e-47d1-9f79-d195e5682824">
+
+
 [See default standards](https://github.com/Shuffle/standards/blob/main/translation_standards) - Standards are modifiable, and you will see your own standards on the [File page in Shuffle](https://shuffler.io/admin?tab=files).
 
 ## Available Apps & categories
