@@ -24,7 +24,7 @@ shuffle = Shuffle(
 - Having an active authentication for the service you are trying to connect to in Shuffle, whether in your own instance or in the Shuffle cloud: [https://shuffler.io](https://shuffler.io/admin?tab=app_auth)
 
 ## Usage
-Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING.
+Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING. By default returns the [matching translation standard](https://github.com/Shuffle/standards/tree/main/translation_standards) if available, otherwise the raw output.
 ```python
 shuffle.create_ticket("jira", title="Title")
 shuffle.send_message("slack", message="Test")
@@ -65,12 +65,12 @@ Basic output for `list_tickets`:
 }]
 ```
 
+[See default standards](https://github.com/Shuffle/standards/blob/main/translation_standards) - Standards are modifiable, and you will see your own standards on the [File page in Shuffle](https://shuffler.io/admin?tab=files).
+
 ## Exploring usage
 To look through past executions, see the execution debugger available on [/workflows/debug](https://shuffler.io/workflows/debug)
 <img width="1150" alt="image" src="https://github.com/user-attachments/assets/c0b3d28f-897e-47d1-9f79-d195e5682824">
 
-
-[See default standards](https://github.com/Shuffle/standards/blob/main/translation_standards) - Standards are modifiable, and you will see your own standards on the [File page in Shuffle](https://shuffler.io/admin?tab=files).
 
 ## Available Apps & categories
 - [>2500 APIs: Search in Shuffle](https://shuffler.io/search?tab=apps)
