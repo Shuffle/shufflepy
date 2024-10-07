@@ -21,7 +21,9 @@ shuffle = Shuffle(
 ```
 
 ## Requirements
-- Having an active authentication for the service you are trying to connect to in Shuffle, whether in your own instance or in the Shuffle cloud: [https://shuffler.io](https://shuffler.io/admin?tab=app_auth)
+- [An API-key for Shuffle](https://shuffler.io/settings)
+- Having an active authentication for the service you are trying to connect to in Shuffle, whether in your own instance or in the Shuffle cloud: [https://shuffler.io](https://shuffler.io/admin?tab=app_auth). This will be added to the future Shuffle CLI, and is also doable with the [App Authentication API](https://shuffler.io/docs/API#add-app-authentication). 
+- **If onprem**: [A Shuffle instance](https://github.com/shuffle/shuffle).
 
 ## Usage
 Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING. By default returns the [matching translation standard](https://github.com/Shuffle/standards/tree/main/translation_standards) if available, otherwise the raw output.
