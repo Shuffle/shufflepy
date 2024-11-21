@@ -21,23 +21,29 @@ shuffle = Shuffle(
 ```
 
 ## Requirements
-- Having an active authentication for the service you are trying to connect to in Shuffle, whether in your own instance or in the Shuffle cloud: [https://shuffler.io](https://shuffler.io/admin?tab=app_auth)
+- [An API-key for Shuffle](https://shuffler.io/settings)
+- Having an active authentication for the service you are trying to connect to in Shuffle, whether in your own instance or in the Shuffle cloud: [https://shuffler.io](https://shuffler.io/admin?tab=app_auth). This will be added to the future Shuffle CLI, and is also doable with the [App Authentication API](https://shuffler.io/docs/API#add-app-authentication). 
+- **If onprem**: [A Shuffle instance](https://github.com/shuffle/shuffle).
 
 ## Usage
-Premade functions:
+Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING. By default returns the [matching translation standard](https://github.com/Shuffle/standards/tree/main/translation_standards) if available, otherwise the raw output.
 ```python
-ticket = shuffle.create_ticket("jira")
-
-# Returns the ticket information in a standardized "ticket" format by default
-print(ticket)
+shuffle.create_ticket("jira", title="Title")
+shuffle.send_message("slack", message="Test")
+shuffle.send_message("teams", message="Test")
+shuffle.upload_document("google drive", file_id="x")
+tickets = shuffle.list_tickets("jira")
 ```
 
-Manual:
+## Manual:
 ```python
 # General connect
 tickets = shuffle.connect(
 	app='jira', 
 	action='list_tickets',
+	fields={
+		"max-amount": 10
+	}
 )
 # Returns output according to the 'list_tickets' standard
 print(tickets)
@@ -62,6 +68,11 @@ Basic output for `list_tickets`:
 ```
 
 [See default standards](https://github.com/Shuffle/standards/blob/main/translation_standards) - Standards are modifiable, and you will see your own standards on the [File page in Shuffle](https://shuffler.io/admin?tab=files).
+
+## Exploring usage
+To look through past executions, see the execution debugger available on [/workflows/debug](https://shuffler.io/workflows/debug)
+<img width="1150" alt="image" src="https://github.com/user-attachments/assets/c0b3d28f-897e-47d1-9f79-d195e5682824">
+
 
 ## Available Apps & categories
 - [>2500 APIs: Search in Shuffle](https://shuffler.io/search?tab=apps)
