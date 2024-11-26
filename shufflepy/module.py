@@ -91,11 +91,12 @@ class Shuffle():
 
         return respdata
 
-    def send_message(self, app="", org_id=""):
+    def send_message(self, app="", org_id="", fields={}):
         return self.connect(
             app=app,
             action="send_message",
-            org_id=org_id
+            org_id=org_id,
+            fields=fields,
         )
 
     def list_tickets(self, app="", org_id=""):
