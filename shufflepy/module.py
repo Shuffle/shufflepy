@@ -99,6 +99,12 @@ class Shuffle():
             fields=fields,
         )
 
+    def transform(self, data, action):
+        if action == "list_tickets":
+            return self.list_tickets(data)
+        else:
+            raise ValueError(f"Unknown action: {action}")
+
     def list_tickets(self, app="", org_id=""):
         return self.connect(
             app=app,
