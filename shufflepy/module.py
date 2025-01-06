@@ -1,3 +1,4 @@
+import os
 import requests
 import http.client
 http.client._MAXLINE = 524288 
@@ -5,12 +6,16 @@ http.client._MAXLINE = 524288
 class Shuffle():
 
     # High default timeout due to autocorrect possibly taking time
-    def __init__(self, auth, url="https://shuffler.io", verify=True, timeout=60):
+    def __init__(self, auth="", url="https://shuffler.io", verify=True, timeout=60):
         if not url:
             raise ValueError("url is required")
 
         if not auth:
-            raise ValueError("auth is required")
+            authkey = os.environ.get('SHUFFLE_AUTHORIZATION')
+            if not authkey:
+                raise ValueError("Required: SHUFFLE_AUTHORIZATION environment key OR auth=apikey")
+
+            auth = authkey
 
         self.config = {
             "url": url,
@@ -38,9 +43,9 @@ class Shuffle():
 
         return parsedheaders
 
-    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, fields={}):
+    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields={}, **kwargs):
         if not category and not app:
-            raise ValueError("category or app is required. Example: app=\"ticket\"")
+            raise ValueError("category or app is required. Example: app=\"jira\"")
 
         if not action:
             raise ValueError("action is required. Example: action=\"list_tickets\"")
@@ -72,6 +77,12 @@ class Shuffle():
         if skip_workflow == False:
             requestdata["skip_workflow"] = False
 
+        if auth_id:
+            requestdata["authentication_id"] = auth_id
+
+        if authentication_id:
+            requestdata["authentication_id"] = authentication_id
+
         headers = self.get_headers() 
         response = requests.post(
             parsedurl, 
@@ -99,11 +110,13 @@ class Shuffle():
             fields=fields,
         )
 
-    def list_tickets(self, app="", org_id=""):
+    def list_tickets(self, app="", org_id="", fields={}, auth_id=""):
         return self.connect(
             app=app,
             action="list_tickets",
-            org_id=org_id
+            org_id=org_id,
+            fields=fields,
+            auth_id=auth_id,
         )
 
     def create_ticket(self, app="", org_id="", fields={}):

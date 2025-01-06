@@ -2,3 +2,5 @@
 *.swo
 *.swt
 *.swz
+*.pyc
+*egg-info
