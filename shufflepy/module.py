@@ -101,11 +101,14 @@ class Shuffle():
 
         try:
             respdata = response.json()
-            return respdata["result"]
-        except:
+            try:
+                return json.loads(respdata["result"])
+            except Exception as e:
+                return respdata
+        except Exception as e:
             raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
-    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields={}, **kwargs):
+    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields={}, params={}, **kwargs):
         if not category and not app:
             raise ValueError("category or app is required. Example: app=\"jira\"")
 
@@ -126,6 +129,9 @@ class Shuffle():
             "skip_workflow": True,
             "action": action,
         }
+
+        if params and not fields:
+            fields = params
 
         if fields:
             requestdata["fields"] = fields
