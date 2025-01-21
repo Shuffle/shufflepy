@@ -31,7 +31,6 @@ class Shuffle():
         if not auth.startswith("Bearer "):
             auth = f"Bearer {auth}"
 
-
         parsedheaders = {
             "Authorization": auth,
             "User-Agent": "Shufflepy 0.0.1",
@@ -42,6 +41,69 @@ class Shuffle():
             parsedheaders["Org-Id"] = self.org_id
 
         return parsedheaders
+
+    def run_app(self, app_id="", action="", auth_id="", parameters={}, org_id="", auth="", authentication_id="", params={}):
+        if len(app_id) != 32:
+            raise ValueError("app_id is required and must be 32 in length (md5)")
+
+        if len(action) == 0:
+            raise ValueError("action is required")
+
+        if auth and not auth_id:
+            auth_id = auth
+        elif authentication_id and not auth_id:
+            auth_id = authentication_id
+
+        if params and not parameters:
+            parameters = params
+
+        parsedurl = "%s/api/v1/apps/%s/run" % (self.config["url"], app_id)
+        parsedheaders = self.get_headers()
+
+        print("Using URL: %s" % parsedurl)
+
+        if org_id:
+            parsedheaders["Org-Id"] = org_id
+
+        if not isinstance(parameters, dict) and not isinstance(parameters, list):
+            raise ValueError("parameters must be a dictionary")
+
+        # Check if parameters is a dict. If it is is, map key: value to parameters
+        params = []
+        if isinstance(parameters, list):
+            params = parameters
+        elif parameters:
+            for key, value in parameters.items():
+                params.append({
+                    "name": key,
+                    "value": value,
+                })
+        else:
+            print("Running with no parameters")
+
+        requestdata = {
+            "app_id": app_id,
+            "name": action,
+            "authentication_id": auth_id,
+            "parameters": params,
+        }
+
+        response = requests.post(
+            parsedurl, 
+            json=requestdata, 
+            headers=parsedheaders,
+            verify=self.verify,
+            timeout=self.timeout,
+        )
+
+        if response.status_code != 200:
+            raise ValueError(f"Status Error ({response.status_code}): {response.text}")
+
+        try:
+            respdata = response.json()
+            return respdata["result"]
+        except:
+            raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
     def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields={}, **kwargs):
         if not category and not app:
@@ -134,8 +196,11 @@ if __name__ == "__main__":
         url="http://localhost:5002", # Used for testing
     )
 
-    resp = shuffle.list_alerts(app="jira")
+    resp = shuffle.run_app(app_id="accdaaf2eeba6a6ed43b2efc0112032d", action="get_emails", auth_id="49c639a38ecbad72df053b5c4fab59b7")
     print(resp)
+
+    #resp = shuffle.list_alerts(app="jira")
+    #print(resp)
 
     #resp = shuffle.send_message(app="whatsapp")
     #print(resp)
