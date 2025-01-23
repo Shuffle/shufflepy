@@ -1,7 +1,7 @@
 # Shufflepy
 Connect to your favorite services with a single line of code. 
 
-**This Library is in an Experimental Phase**
+**This Library is in an Experimental Phase, [released under pypi](https://pypi.org/project/shufflepy/)**
 
 ## Installation
 ```bash
@@ -33,6 +33,11 @@ shuffle.send_message("slack", message="Test")
 shuffle.send_message("teams", message="Test")
 shuffle.upload_document("google drive", file_id="x")
 tickets = shuffle.list_tickets("jira")
+```
+
+**Normal App run control:**
+```python
+shuffle.run_app(app_id="bc78f35c6c6351b07a09b7aed5d29652", action="repeat_back_to_me", params={"call": "The value to repeat"})
 ```
 
 ## Manual:
