@@ -1,10 +1,10 @@
 # test_mymodule.py
 import unittest
-from module import Shuffle
+from module import Singul 
 
-class TestShuffle(unittest.TestCase):
+class TestSingul(unittest.TestCase):
     def setUp(self):
-        self.shuffle = Shuffle("asdf1234")
+        self.shuffle = Singul("asdf1234")
     
     def test_connect(self):
         resp = self.shuffle.connect(

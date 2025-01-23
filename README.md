@@ -10,11 +10,11 @@ pip install shufflepy
 
 ## Configuration
 ```python
-from shufflepy import Shuffle
+from shufflepy import Singul 
 
 ## If the config is not specified, the library will use `https://shuffler.io` as the default URL. You must specify an apikey. 
 
-shuffle = Shuffle(
+shuffle = Singul(
 	"APIKEY",
 	url='https://shuffler.io',
 )

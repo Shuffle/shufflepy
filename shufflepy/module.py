@@ -3,7 +3,7 @@ import requests
 import http.client
 http.client._MAXLINE = 524288 
 
-class Shuffle():
+class Singul():
 
     # High default timeout due to autocorrect possibly taking time
     def __init__(self, auth="", url="https://shuffler.io", verify=True, timeout=60):
@@ -33,7 +33,7 @@ class Shuffle():
 
         parsedheaders = {
             "Authorization": auth,
-            "User-Agent": "Shufflepy 0.0.1",
+            "User-Agent": "Singul 0.0.1",
         }
 
         # Overrides the current org
@@ -197,7 +197,7 @@ class Shuffle():
 
 if __name__ == "__main__":
     import os
-    shuffle = Shuffle(
+    shuffle = Singul(
         os.environ.get("SHUFFLE_AUTHORIZATION"),
         url="http://localhost:5002", # Used for testing
     )
