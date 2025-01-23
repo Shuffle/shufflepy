@@ -1,1 +1,1 @@
-from .module import Shuffle
+from .module import Singul 
