@@ -6,7 +6,7 @@ http.client._MAXLINE = 524288
 class Singul():
 
     # High default timeout due to autocorrect possibly taking time
-    def __init__(self, auth="", url="https://shuffler.io", verify=True, timeout=60):
+    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=60):
         if not url:
             raise ValueError("url is required")
 
@@ -19,7 +19,8 @@ class Singul():
 
         self.config = {
             "url": url,
-            "auth": auth
+            "auth": auth,
+            "execution_id": execution_id,
         }
 
         self.org_id = ""
@@ -66,7 +67,10 @@ class Singul():
             parsedheaders["Org-Id"] = org_id
 
         if not isinstance(parameters, dict) and not isinstance(parameters, list):
-            raise ValueError("parameters must be a dictionary")
+            raise ValueError("Parameters must be a dictionary of key:values or list of [{name: name, value:value}]")
+
+        if self.config["execution_id"]:
+            parsedurl += f"?execution_id={self.config['execution_id']}&authorization={self.config['auth']}"
 
         # Check if parameters is a dict. If it is is, map key: value to parameters
         params = []
