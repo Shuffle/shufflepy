@@ -1,13 +1,4 @@
-# This workflow will upload a Python Package using Twine when a release is created
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Upload Python Package
-
 on:
   workflow_dispatch:  # Allows the workflow to be run manually from GitHub
     inputs:
@@ -19,11 +10,8 @@ on:
   push:
     tags:
       - 'v*'  # Triggers when a version tag is pushed (e.g., v1.0.0)
-
-
 permissions:
   contents: read
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -37,18 +25,16 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install build
+        pip install build twine==6.0.1
         
     - name: Build package
       run: python -m build
       
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@v1.10.2
-      with:
-        verify-metadata: false
-        repository-url: https://upload.pypi.org/legacy/
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Publish package with Twine
+      run: |
+        python -m twine upload dist/*
       env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        TWINE_REPOSITORY_URL: https://upload.pypi.org/legacy/
         ACTIONS_STEP_DEBUG: true  # Enables debug mode for this step
-
