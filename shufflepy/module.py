@@ -205,21 +205,22 @@ if __name__ == "__main__":
         "http://localhost:5002",
     )
 
-    # Test the connection
     try:
-        resp = shuffle.connect(
-            app="jira",
-            action="list_tickets",
-            category="jira",
+        resp = shuffle.communication.send_message(
+            app="slack",
             org_id=os.environ.get("SHUFFLE_ORG_ID"),
-            fields=[]
+            fields=[
+                {
+                    "key": "text",
+                    "value": "Hello world",
+                },
+                {
+                    "key": "channel",
+                    "value": "general",
+                }
+            ]
         )
-        print(resp)
-    except Exception as e:
-        print(f"Connection failed: {e}")
-    
-    try:
         
         print(resp)
     except Exception as e:
-        print(f"Communication failed: {e}")
+        print(e)
