@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='shufflepy',  # Name of the package
-    version='0.0.7',  # Version number
+    version='v-nightly-21-03-2025',  # Version number
     description='Use Singul to connect to API with a single line of code',  
     long_description=open('README.md').read(),  
     long_description_content_type='text/markdown',  
