@@ -45,9 +45,10 @@ shuffle.run_app(app_id="bc78f35c6c6351b07a09b7aed5d29652", action="repeat_back_t
 tickets = shuffle.connect(
 	app='jira', 
 	action='list_tickets',
-	fields={
-		"max-amount": 10
-	}
+	fields=[{
+		"key": "max-amount",
+		"value": 10
+	}]
 )
 # Returns output according to the 'list_tickets' standard
 print(tickets)
