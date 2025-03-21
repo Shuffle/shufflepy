@@ -1,10 +1,21 @@
 import os
 import requests
 import http.client
-http.client._MAXLINE = 524288 
+import json
+
+from shufflepy.communication import Communication
+from shufflepy.siem import SIEM
+from shufflepy.eradication import Eradication
+from shufflepy.cases import Cases
+from shufflepy.assets import Assets  
+from shufflepy.intel import Intel
+from shufflepy.iam import IAM
+from shufflepy.network import Network
+from shufflepy.other import Other
+
+http.client._MAXLINE = 524288
 
 class Singul():
-
     # High default timeout due to autocorrect possibly taking time
     def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=60):
         if not url:
@@ -26,6 +37,17 @@ class Singul():
         self.org_id = ""
         self.verify = verify
         self.timeout = timeout
+        
+        # Create instances of each category
+        self.communication = Communication(self)
+        self.siem = SIEM(self)
+        self.eradication = Eradication(self)
+        self.cases = Cases(self)
+        self.assets = Assets(self)
+        self.intel = Intel(self)
+        self.iam = IAM(self)
+        self.network = Network(self)
+        self.other = Other(self)
 
     def get_headers(self):
         auth = self.config["auth"]
@@ -112,7 +134,7 @@ class Singul():
         except Exception as e:
             raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
-    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields={}, params={}, **kwargs):
+    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, **kwargs):
         if not category and not app:
             raise ValueError("category or app is required. Example: app=\"jira\"")
 
@@ -154,8 +176,10 @@ class Singul():
 
         if authentication_id:
             requestdata["authentication_id"] = authentication_id
+            
+            
+        print("Sending request data: %s" % requestdata)
 
-        headers = self.get_headers() 
         response = requests.post(
             parsedurl, 
             json=requestdata, 
@@ -174,58 +198,28 @@ class Singul():
 
         return respdata
 
-    def send_message(self, app="", org_id="", fields={}):
-        return self.connect(
-            app=app,
-            action="send_message",
-            org_id=org_id,
-            fields=fields,
-        )
-
-    def list_tickets(self, app="", org_id="", fields={}, auth_id=""):
-        return self.connect(
-            app=app,
-            action="list_tickets",
-            org_id=org_id,
-            fields=fields,
-            auth_id=auth_id,
-        )
-
-    def create_ticket(self, app="", org_id="", fields={}):
-        return self.connect(
-            app=app,
-            action="create_ticket",
-            org_id=org_id,
-            fields=fields
-        )
-
 if __name__ == "__main__":
     import os
     shuffle = Singul(
         os.environ.get("SHUFFLE_AUTHORIZATION"),
-        url="http://localhost:5002", # Used for testing
+        "http://localhost:5002",
     )
 
-    resp = shuffle.run_app(app_id="accdaaf2eeba6a6ed43b2efc0112032d", action="get_emails", auth_id="49c639a38ecbad72df053b5c4fab59b7")
-    print(resp)
-
-    #resp = shuffle.list_alerts(app="jira")
-    #print(resp)
-
-    #resp = shuffle.send_message(app="whatsapp")
-    #print(resp)
-
-    #resp = shuffle.send_message(app="discord")
-    #print(resp)
-
-    #resp = shuffle.list_tickets(app="monday")
-    #print(resp)
-
-    #resp = shuffle.list_tickets(app="github")
-    #print(resp)
-
-    #resp = shuffle.create_ticket(app="jira") 
-    #print(resp)
-
-    #resp = shuffle.create_ticket(app="github") 
-    #print(resp)
+    # Test the connection
+    try:
+        resp = shuffle.connect(
+            app="jira",
+            action="list_tickets",
+            category="jira",
+            org_id=os.environ.get("SHUFFLE_ORG_ID"),
+            fields=[]
+        )
+        print(resp)
+    except Exception as e:
+        print(f"Connection failed: {e}")
+    
+    try:
+        
+        print(resp)
+    except Exception as e:
+        print(f"Communication failed: {e}")
