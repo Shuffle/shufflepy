@@ -28,11 +28,10 @@ shuffle = Singul(
 ## Usage
 Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING. By default returns the [matching translation standard](https://github.com/Shuffle/standards/tree/main/translation_standards) if available, otherwise the raw output.
 ```python
-shuffle.create_ticket("jira", title="Title")
-shuffle.send_message("slack", message="Test")
-shuffle.send_message("teams", message="Test")
-shuffle.upload_document("google drive", file_id="x")
-tickets = shuffle.list_tickets("jira")
+shuffle.cases.create_ticket("jira", title="Title")
+shuffle.communication.send_message("slack", message="Test")
+shuffle.communication.send_message("teams", message="Test")
+tickets = shuffle.cases.list_tickets("jira")
 ```
 
 **Normal App run control:**
@@ -55,7 +54,7 @@ print(tickets)
 
 # General transformer - Transforms from any data into a standard, e.g. "list_tickets"
 sourcedata = [{"title": "Tickettitle", "id": "hiya"}]
-tickets = shuffle.transform(sourcedata, "list_tickets")
+tickets = shuffle.transform(sourcedata, "list_tickets") # (coming soon)
 
 print(tickets)
 ```
