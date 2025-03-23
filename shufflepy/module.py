@@ -21,8 +21,17 @@ class Singul():
         if not url:
             raise ValueError("url is required")
 
+        if len(execution_id) == 0 and os.getenv("EXECUTIONID"):
+            if os.getenv("DEBUG") == "true":
+                print("Using execution_id '%s' and exec auth '%s'" % (os.getenv("EXECUTIONID"), os.getenv("AUTHORIZATION")))
+
+            execution_id = os.getenv("EXECUTIONID")
+
+            if not auth:
+                auth = os.getenv("AUTHORIZATION")
+
         if not auth:
-            authkey = os.environ.get('SHUFFLE_AUTHORIZATION')
+            authkey = os.getenv('SHUFFLE_AUTHORIZATION')
             if not authkey:
                 raise ValueError("Required: SHUFFLE_AUTHORIZATION environment key OR auth=apikey")
 
@@ -64,6 +73,62 @@ class Singul():
             parsedheaders["Org-Id"] = self.org_id
 
         return parsedheaders
+
+    def run_workflow(self, workflow_id="", start_command="", wait=True, runtime_argument="", execution_argument="", startnode="", org_id="", auth="", auth_id="", authentication_id=""):
+        # Check if UUID length
+        if len(workflow_id) != 36:
+            raise ValueError("workflow_id must be 36 in length (UUID)")
+
+        if auth and not auth_id:
+            auth_id = auth
+
+        if authentication_id and not auth_id:
+            auth_id = authentication_id
+
+        if not start_command:
+            if runtime_argument:
+                start_command = runtime_argument
+            elif execution_argument:
+                start_command = execution_argument
+
+        parsedurl = "%s/api/v1/workflows/%s/run" % (self.config["url"], workflow_id)
+        requestdata = {
+            "execution_argument": start_command,
+            "start": startnode,
+        }
+
+        if self.config["execution_id"]:
+            #parsedurl += f"?execution_id={self.config['execution_id']}&authorization={self.config['auth']}"
+            parsedurl += f"?execution_id={self.config['execution_id']}&source_auth={self.config['auth']}"
+            #requestdata["source_execution"] = self.config["execution_id"]
+            #requestdata["source_auth"] = self.config["auth"]
+
+        if str(wait).lower() == "true":
+            if "?" in parsedurl:
+                parsedurl += "&wait=true"
+            else:
+                parsedurl += "?wait=true"
+
+        parsedheaders = self.get_headers()
+        if org_id:
+            parsedheaders["Org-Id"] = org_id
+
+        response = requests.post(
+            parsedurl, 
+            json=requestdata, 
+            headers=parsedheaders,
+            verify=self.verify,
+            timeout=self.timeout,
+        )
+
+        if response.status_code != 200:
+            raise ValueError(f"Status Error ({response.status_code}): {response.text}")
+
+        try:
+            respdata = response.json()
+            return respdata
+        except Exception as e:
+            raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
     def run_app(self, app_id="", action="", auth_id="", parameters={}, org_id="", auth="", authentication_id="", params={}):
         if len(app_id) != 32:
@@ -176,6 +241,12 @@ class Singul():
 
         if authentication_id:
             requestdata["authentication_id"] = authentication_id
+
+        if self.config["execution_id"]:
+            if "?" in parsedurl:
+                parsedurl += f"&execution_id={self.config['execution_id']}&authorization={self.config['auth']}"
+            else:
+                parsedurl += f"?execution_id={self.config['execution_id']}&authorization={self.config['auth']}"
             
             
         print("Sending request data: %s" % requestdata)
