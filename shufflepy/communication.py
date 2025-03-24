@@ -58,6 +58,15 @@ class Communication(BaseCategory):
             fields=fields,
             auth_id=auth_id
         )
+        
+    def create_contact(self, app="", org_id="", fields=[], auth_id=""):
+        return self._connect(
+            action="create_contact",
+            app=app,
+            org_id=org_id,
+            fields=fields,
+            auth_id=auth_id
+        )
 
     def get_contact(self, app="", org_id="", fields=[], auth_id=""):
         return self._connect(
