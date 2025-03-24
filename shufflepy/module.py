@@ -17,7 +17,7 @@ http.client._MAXLINE = 524288
 
 class Singul():
     # High default timeout due to autocorrect possibly taking time
-    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=60):
+    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=120):
         if not url:
             raise ValueError("url is required")
 
@@ -273,20 +273,39 @@ if __name__ == "__main__":
     import os
     shuffle = Singul(
         os.environ.get("SHUFFLE_AUTHORIZATION"),
-        "https://shuffler.io",
+        # "https://shuffler.io",
+        "http://localhost:5002",
     )
+    
+    # shuffle.config["url"] = "https://e100-122-164-127-83.ngrok-free.app"
 
     try:
-
         resp = shuffle.intel.search_ioc(
-            app="virustotal",
+            app="virustotal_v3",
             org_id=os.environ.get("SHUFFLE_ORG_ID"),
             fields=[{
                 "key": "domain",
-                "value": "google.com",
+                "value": "www.infopercept.com",
             }]
         )
         
         print(resp)
+        
+        # resp = shuffle.communication.get_contact(
+        #     app="teams",
+        #     org_id=os.environ.get("SHUFFLE_ORG_ID"),
+        #     fields=[
+        #         {
+        #             "key": "to",
+        #             "value": "aditya@shuffler.io"
+        #         },
+        #         {
+        #             "value": "shuffleplaybook@infopercept.com",
+        #             "key": "from"
+        #         }
+        #     ]
+        # )
+        
+        # print(resp)
     except Exception as e:
         print(e)
