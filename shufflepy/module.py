@@ -273,23 +273,18 @@ if __name__ == "__main__":
     import os
     shuffle = Singul(
         os.environ.get("SHUFFLE_AUTHORIZATION"),
-        "http://localhost:5002",
+        "https://shuffler.io",
     )
 
     try:
-        resp = shuffle.communication.send_message(
-            app="slack",
+
+        resp = shuffle.intel.search_ioc(
+            app="virustotal",
             org_id=os.environ.get("SHUFFLE_ORG_ID"),
-            fields=[
-                {
-                    "key": "text",
-                    "value": "Hello world",
-                },
-                {
-                    "key": "channel",
-                    "value": "general",
-                }
-            ]
+            fields=[{
+                "key": "domain",
+                "value": "google.com",
+            }]
         )
         
         print(resp)
