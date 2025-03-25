@@ -23,6 +23,7 @@ class Communication(BaseCategory):
             auth_id=auth_id
         )
 
+    # Get message and serch message was use same action
     def get_message(self, app="", org_id="", fields=[], auth_id=""):
         return self._connect(
             action="get_message",
@@ -32,6 +33,7 @@ class Communication(BaseCategory):
             auth_id=auth_id
         )
 
+    # Get message and serch message was use same action
     def search_messages(self, app="", org_id="", fields=[], auth_id=""):
         return self._connect(
             action="search_messages",
@@ -41,6 +43,7 @@ class Communication(BaseCategory):
             auth_id=auth_id
         )
 
+    # we can use https://shuffler.io/apis/d641997f3f1657ec4b0c91cba020838b#files-remote-list api for the file
     def list_attachments(self, app="", org_id="", fields=[], auth_id=""):
         return self._connect(
             action="list_attachments",
@@ -53,15 +56,6 @@ class Communication(BaseCategory):
     def get_attachment(self, app="", org_id="", fields=[], auth_id=""):
         return self._connect(
             action="get_attachment",
-            app=app,
-            org_id=org_id,
-            fields=fields,
-            auth_id=auth_id
-        )
-        
-    def create_contact(self, app="", org_id="", fields=[], auth_id=""):
-        return self._connect(
-            action="create_contact",
             app=app,
             org_id=org_id,
             fields=fields,
