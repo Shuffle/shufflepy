@@ -1,6 +1,6 @@
 ---
 icon: s
-cover: .gitbook/assets/WhatsApp Image 2025-03-28 at 3.06.31 PM.jpeg
+cover: .gitbook/assets/singul_poster.jpg
 coverY: 0
 ---
 
