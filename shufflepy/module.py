@@ -3,6 +3,8 @@ import requests
 import http.client
 import json
 
+import datetime
+
 from shufflepy.communication import Communication
 from shufflepy.siem import SIEM
 from shufflepy.eradication import Eradication
@@ -17,7 +19,7 @@ http.client._MAXLINE = 524288
 
 class Singul():
     # High default timeout due to autocorrect possibly taking time
-    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=120):
+    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=300, error_on_bad_status=False):
         if not url:
             raise ValueError("url is required")
 
@@ -42,6 +44,8 @@ class Singul():
             "auth": auth,
             "execution_id": execution_id,
         }
+        
+        self.error_on_bad_status = error_on_bad_status
 
         self.org_id = ""
         self.verify = verify
@@ -121,7 +125,7 @@ class Singul():
             timeout=self.timeout,
         )
 
-        if response.status_code != 200:
+        if (response.status_code != 200) and self.error_on_bad_status:
             raise ValueError(f"Status Error ({response.status_code}): {response.text}")
 
         try:
@@ -187,7 +191,7 @@ class Singul():
             timeout=self.timeout,
         )
 
-        if response.status_code != 200:
+        if response.status_code != 200 and self.error_on_bad_status:
             raise ValueError(f"Status Error ({response.status_code}): {response.text}")
 
         try:
@@ -259,7 +263,7 @@ class Singul():
             timeout=self.timeout,
         )
 
-        if response.status_code != 200:
+        if response.status_code != 200 and self.error_on_bad_status:
             raise ValueError(f"Status Error ({response.status_code}): {response.text}")
 
         try:
@@ -268,44 +272,3 @@ class Singul():
             raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
         return respdata
-
-if __name__ == "__main__":
-    import os
-    shuffle = Singul(
-        os.environ.get("SHUFFLE_AUTHORIZATION"),
-        # "https://shuffler.io",
-        "http://localhost:5002",
-    )
-    
-    # shuffle.config["url"] = "https://e100-122-164-127-83.ngrok-free.app"
-
-    try:
-        resp = shuffle.intel.search_ioc(
-            app="virustotal_v3",
-            org_id=os.environ.get("SHUFFLE_ORG_ID"),
-            fields=[{
-                "key": "domain",
-                "value": "www.infopercept.com",
-            }]
-        )
-        
-        print(resp)
-        
-        # resp = shuffle.communication.get_contact(
-        #     app="teams",
-        #     org_id=os.environ.get("SHUFFLE_ORG_ID"),
-        #     fields=[
-        #         {
-        #             "key": "to",
-        #             "value": "aditya@shuffler.io"
-        #         },
-        #         {
-        #             "value": "shuffleplaybook@infopercept.com",
-        #             "key": "from"
-        #         }
-        #     ]
-        # )
-        
-        # print(resp)
-    except Exception as e:
-        print(e)
