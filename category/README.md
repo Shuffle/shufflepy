@@ -6,7 +6,7 @@ icon: layer-group
 
 
 
-[Case Management](https://chatgpt.com/c/case-management.md)
+[Case Management](case-management.md)
 
 Manage tickets across tools like **Jira**, **GitHub**, and **TheHive**. Actions include:
 
@@ -16,7 +16,7 @@ Manage tickets across tools like **Jira**, **GitHub**, and **TheHive**. Actions 
 
 ***
 
-#### [SIEM Integration](https://chatgpt.com/c/siem-integration.md)
+#### [SIEM Integration](siem-integration.md)
 
 Fetch and manage security events from platforms like **Wazuh**, **Splunk**, **Elastic**, and **Microsoft Sentinel**. Supports:
 
@@ -26,7 +26,7 @@ Fetch and manage security events from platforms like **Wazuh**, **Splunk**, **El
 
 ***
 
-#### [Asset Management](https://chatgpt.com/c/asset-management.md)
+#### [Asset Management](asset-management.md)
 
 Query and enrich asset data from tools like **Axonius**, **Device42**, and **Rapid7**.
 
@@ -35,7 +35,7 @@ Query and enrich asset data from tools like **Axonius**, **Device42**, and **Rap
 
 ***
 
-#### [Identity & Access Management](https://chatgpt.com/c/iam.md)
+#### [Identity & Access Management](identity-and-access-management.md)
 
 Control user access via **Active Directory**, **Azure AD**, **Vault**, etc.
 
@@ -45,7 +45,7 @@ Control user access via **Active Directory**, **Azure AD**, **Vault**, etc.
 
 ***
 
-#### [Eradication Module](https://chatgpt.com/c/eradication.md)
+#### [Eradication Module](./#eradication-module)
 
 Act quickly on threats by connecting to **EDR** platforms like **SentinelOne**, **Bitdefender**, or **Huntress**.
 
