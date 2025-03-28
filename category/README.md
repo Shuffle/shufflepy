@@ -6,7 +6,7 @@ icon: layer-group
 
 
 
-[Case Management](case-management.md)
+#### [Case Management](case-management.md)
 
 Manage tickets across tools like **Jira**, **GitHub**, and **TheHive**. Actions include:
 
@@ -45,7 +45,7 @@ Control user access via **Active Directory**, **Azure AD**, **Vault**, etc.
 
 ***
 
-#### [Eradication Module](./#eradication-module)
+#### [Eradication Module](eradication-module.md)
 
 Act quickly on threats by connecting to **EDR** platforms like **SentinelOne**, **Bitdefender**, or **Huntress**.
 
@@ -55,7 +55,7 @@ Act quickly on threats by connecting to **EDR** platforms like **SentinelOne**, 
 
 ***
 
-#### [Threat Intelligence (Intel)](https://chatgpt.com/c/intel.md)
+#### [Threat Intelligence (Intel)](threat-intelligence-intel.md)
 
 Integrate with platforms like **VirusTotal**, **GreyNoise**, **Shodan**, and **MISP**.
 
@@ -64,7 +64,7 @@ Integrate with platforms like **VirusTotal**, **GreyNoise**, **Shodan**, and **M
 
 ***
 
-#### [Network Module](https://chatgpt.com/c/network.md)
+#### [Network Module](network-module.md)
 
 Work with firewall tools like **Palo Alto**, **FortiGate**, **OPNsense**, and more.
 
@@ -73,7 +73,7 @@ Work with firewall tools like **Palo Alto**, **FortiGate**, **OPNsense**, and mo
 
 ***
 
-#### [Communication Module](https://chatgpt.com/c/communication.md)
+#### [Communication Module](communication-module.md)
 
 Send, receive, or manage messages through **Slack**, **Gmail**, **Teams**, **Telegram**, and more.
 
@@ -83,7 +83,7 @@ Send, receive, or manage messages through **Slack**, **Gmail**, **Teams**, **Tel
 
 ***
 
-#### [Other Module with Singul](https://chatgpt.com/c/other.md)
+#### [Other Module with Singul](other-module.md)
 
 A catch-all utility module for system tools like **Wazuh**, **HTTP**, **Veeam**, and **Webroot**.
 
