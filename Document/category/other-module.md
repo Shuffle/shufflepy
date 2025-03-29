@@ -1,3 +1,7 @@
+---
+icon: cube
+---
+
 # Other Module
 
 The `Other` module in Singul is a flexible category that provides utility and system-level operations for various tools that don't strictly fit into other standard modules like SIEM, IAM, or Communication. These actions range from retrieving configs, health checks, system information, and even executing remote scripts.

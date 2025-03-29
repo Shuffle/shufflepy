@@ -10,7 +10,7 @@
   * [Eradication Module](Document/category/eradication-module.md)
   * [Identity & Access Management](Document/category/identity-and-access-management.md)
   * [Network Module](Document/category/network-module.md)
-  * [Other Module](Document/category/other-module.md)
   * [SIEM Integration](Document/category/siem-integration.md)
   * [Threat Intelligence (Intel)](Document/category/threat-intelligence-intel.md)
+  * [Other Module](Document/category/other-module.md)
 * [Test Case Execution & Benchmarking Guide](Document/tests.md)
