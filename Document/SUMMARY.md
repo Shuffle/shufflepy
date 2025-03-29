@@ -1,8 +1,8 @@
 # Table of contents
 
-* [Singul](README.md)
+* [Singul](../)
 * [Quickstart](getting-started.md)
-* [Category](category/README.md)
+* [Category](category/)
   * [Case Management](category/case-management.md)
   * [SIEM Integration](category/siem-integration.md)
   * [Asset Management](category/asset-management.md)

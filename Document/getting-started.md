@@ -22,7 +22,7 @@ To use Singul with a specific app (like Jira, Outlook, TheHive, etc.), follow th
 
 Browse available apps supported by Shuffle:[Search for apps here](https://shuffler.io)
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 You’ll find integrations for tools like:
 
