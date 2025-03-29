@@ -1,3 +1,7 @@
+---
+icon: table
+---
+
 # Table of contents
 
 * [Singul](../)
