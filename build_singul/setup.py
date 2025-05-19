@@ -8,7 +8,7 @@ setup(
     long_description_content_type='text/markdown',  
     author='Fredrik Saito Odegaardstuen',  
     author_email='frikky@shuffler.io',  
-    url='https://github.com/shuffle/shufflepy',  
+    url='https://github.com/shuffle/singul',  
     packages=find_packages(),  
     install_requires=[  
         'requests',
