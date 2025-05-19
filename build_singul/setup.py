@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 def get_long_description():
     try:
-        url = "https://raw.githubusercontent.com/Shuffle/singul/main/README.md"
+        url = "https://raw.githubusercontent.com/shuffle/singul/main/README.md"
         response = requests.get(url, timeout=5)
         response.raise_for_status()
         return response.text
