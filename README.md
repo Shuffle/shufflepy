@@ -1,26 +1,16 @@
-# Shufflepy (& Singulpy)
+# Shufflepy ( and Singulpy
 Connect to your favorite services with a Singul line of code. 
-
-# Singul
-
-Welcome to the official documentation for **Singul** — an AI-powered agent API designed to connect your tools using simple and smart API calls.
 
 This documentation will help you get started with Singul, understand its capabilities, and integrate it into your workflows easily. Whether you're a developer, a security analyst, or an automation engineer — **Singul is built for you.**
 
-## If the config is not specified, the library will use `https://shuffler.io` as the default URL. You must specify an apikey. 
-singul = Singul(
-	"APIKEY",
-	url='https://shuffler.io',
-)
-```
-
-**Singul** is an AI agent API that allows you to send actions to tools like Jira, Outlook, Gmail, TheHive, SIEM/SOAR platforms, and more — all through a simple HTTP API.
+**Singul** is an API handler that allows you to get or update data in tools like Jira, Outlook, Gmail, Service Now, and more - with a single line of code.
 
 ## Usage
 Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING. By default returns the [matching translation standard](https://github.com/Shuffle/standards/tree/main/translation_standards) if available, otherwise the raw output.
 ```python
 from shufflepy import Singul 
 
+# If you want to use REMOTE singul (shuffler.io / open source Shuffle)
 singul = Singul(
 	"APIKEY",
 	url='https://shuffler.io',
@@ -30,6 +20,10 @@ singul.cases.create_ticket("jira", title="Title")
 singul.communication.send_message("slack", message="Test")
 singul.communication.send_message("teams", message="Test")
 tickets = singul.cases.list_tickets("jira")
+
+
+# If you want to run it 100% locally
+resp = singul.run("jira", action="list_tickets")
 ```
 
 **Normal App run control:**
