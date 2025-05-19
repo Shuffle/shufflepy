@@ -5,6 +5,8 @@ import json
 
 import datetime
 
+from .standalone import Standalone
+
 from shufflepy.communication import Communication
 from shufflepy.siem import SIEM
 from shufflepy.eradication import Eradication
@@ -20,25 +22,26 @@ http.client._MAXLINE = 524288
 class Singul():
 
     # High default timeout due to autocorrect possibly taking time
-    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=300, error_on_bad_status=False):
-        if not url:
-            raise ValueError("url is required")
+    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=300, error_on_bad_status=False, standalone=False):
+        if not standalone:
+            if not url:
+                raise ValueError("url is required")
 
-        if len(execution_id) == 0 and os.getenv("EXECUTIONID"):
-            if os.getenv("DEBUG") == "true":
-                print("Using execution_id '%s' and exec auth '%s'" % (os.getenv("EXECUTIONID"), os.getenv("AUTHORIZATION")))
+            if len(execution_id) == 0 and os.getenv("EXECUTIONID"):
+                if os.getenv("DEBUG") == "true":
+                    print("Using execution_id '%s' and exec auth '%s'" % (os.getenv("EXECUTIONID"), os.getenv("AUTHORIZATION")))
 
-            execution_id = os.getenv("EXECUTIONID")
+                execution_id = os.getenv("EXECUTIONID")
+
+                if not auth:
+                    auth = os.getenv("AUTHORIZATION")
 
             if not auth:
-                auth = os.getenv("AUTHORIZATION")
+                authkey = os.getenv('SHUFFLE_AUTHORIZATION')
+                if not authkey:
+                    raise ValueError("Required: SHUFFLE_AUTHORIZATION environment key OR auth=apikey")
 
-        if not auth:
-            authkey = os.getenv('SHUFFLE_AUTHORIZATION')
-            if not authkey:
-                raise ValueError("Required: SHUFFLE_AUTHORIZATION environment key OR auth=apikey")
-
-            auth = authkey
+                auth = authkey
 
         self.config = {
             "url": url,
@@ -48,6 +51,7 @@ class Singul():
         
         self.error_on_bad_status = error_on_bad_status
 
+        self.standalone = standalone
         self.org_id = ""
         self.verify = verify
         self.timeout = timeout
@@ -78,6 +82,15 @@ class Singul():
             parsedheaders["Org-Id"] = self.org_id
 
         return parsedheaders
+
+    def remove_binary(self):
+        standalone = Standalone()
+        path = standalone.get_executable_path()
+
+        if os.path.isfile(path):
+            os.remove(path)
+        else:
+            print("File not found: %s" % path)
 
     def run_workflow(self, workflow_id="", start_command="", wait=True, runtime_argument="", execution_argument="", startnode="", org_id="", auth="", auth_id="", authentication_id=""):
         # Check if UUID length
@@ -204,7 +217,15 @@ class Singul():
         except Exception as e:
             raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
+    def run(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, **kwargs):
+        return connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
+
+
     def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, **kwargs):
+        if self.standalone:
+            standalone = Standalone()
+            return standalone.connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
+
         if not category and not app:
             raise ValueError("category or app is required. Example: app=\"jira\"")
 
@@ -228,6 +249,10 @@ class Singul():
 
         if params and not fields:
             fields = params
+
+        for key in kwargs:
+            if key not in newfields:
+                newfields[key] = kwargs[key]
 
         if fields:
             requestdata["fields"] = fields
@@ -254,8 +279,6 @@ class Singul():
                 parsedurl += f"?execution_id={self.config['execution_id']}&authorization={self.config['auth']}"
             
             
-        print("Sending request data: %s" % requestdata)
-
         response = requests.post(
             parsedurl, 
             json=requestdata, 
@@ -273,4 +296,3 @@ class Singul():
             raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
         return respdata
-
