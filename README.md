@@ -14,7 +14,7 @@ from shufflepy import Singul
 
 ## If the config is not specified, the library will use `https://shuffler.io` as the default URL. You must specify an apikey. 
 
-shuffle = Singul(
+singul = Singul(
 	"APIKEY",
 	url='https://shuffler.io',
 )
@@ -28,21 +28,21 @@ shuffle = Singul(
 ## Usage
 Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING. By default returns the [matching translation standard](https://github.com/Shuffle/standards/tree/main/translation_standards) if available, otherwise the raw output.
 ```python
-shuffle.cases.create_ticket("jira", title="Title")
-shuffle.communication.send_message("slack", message="Test")
-shuffle.communication.send_message("teams", message="Test")
-tickets = shuffle.cases.list_tickets("jira")
+singul.cases.create_ticket("jira", title="Title")
+singul.communication.send_message("slack", message="Test")
+singul.communication.send_message("teams", message="Test")
+tickets = singul.cases.list_tickets("jira")
 ```
 
 **Normal App run control:**
 ```python
-shuffle.run_app(app_id="bc78f35c6c6351b07a09b7aed5d29652", action="repeat_back_to_me", params={"call": "The value to repeat"})
+singul.run_app(app_id="bc78f35c6c6351b07a09b7aed5d29652", action="repeat_back_to_me", params={"call": "The value to repeat"})
 ```
 
 ## Manual:
 ```python
 # General connect
-resp = shuffle.cases.list_tickets(
+resp = singul.cases.list_tickets(
 	app="jira",
 	org_id=os.environ.get("SHUFFLE_ORG_ID"),
 	fields=[{
@@ -55,7 +55,7 @@ print(resp)
 
 # General transformer - Transforms from any data into a standard, e.g. "list_tickets"
 sourcedata = [{"title": "Tickettitle", "id": "hiya"}]
-tickets = shuffle.transform(sourcedata, "list_tickets") # (coming soon)
+tickets = singul.transform(sourcedata, "list_tickets") # (coming soon)
 
 print(tickets)
 ```
