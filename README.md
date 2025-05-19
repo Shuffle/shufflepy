@@ -13,7 +13,6 @@ pip install shufflepy
 from shufflepy import Singul 
 
 ## If the config is not specified, the library will use `https://shuffler.io` as the default URL. You must specify an apikey. 
-
 singul = Singul(
 	"APIKEY",
 	url='https://shuffler.io',
@@ -28,6 +27,13 @@ singul = Singul(
 ## Usage
 Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING. By default returns the [matching translation standard](https://github.com/Shuffle/standards/tree/main/translation_standards) if available, otherwise the raw output.
 ```python
+from shufflepy import Singul 
+
+singul = Singul(
+	"APIKEY",
+	url='https://shuffler.io',
+)
+
 singul.cases.create_ticket("jira", title="Title")
 singul.communication.send_message("slack", message="Test")
 singul.communication.send_message("teams", message="Test")
@@ -82,12 +88,11 @@ To look through past executions, see the execution debugger available on [/workf
 ## Available Apps & categories
 - [>2500 APIs: Search in Shuffle](https://shuffler.io/search?tab=apps)
 
-## Available Categories (May 2024)
-- Ticket management 	(Cases)
-- Communication/Email	(Comms)
-- SIEM 					(SIEM)	
-- EDR/XDR 				(Eradication)
-- Asset Management  	(Assets)
-- Identity				(IAM) 
-- Threat Intel			(Intel)
-- Cloud Security		(Cloud)
+## Local testing
+```bash
+cd build_singul
+cp -r ../shufflepy singul
+python3 -m pip install -e . --break-system-packages
+
+# You can now import the library locally :)
+```

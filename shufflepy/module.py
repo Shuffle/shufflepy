@@ -18,6 +18,7 @@ from shufflepy.other import Other
 http.client._MAXLINE = 524288
 
 class Singul():
+
     # High default timeout due to autocorrect possibly taking time
     def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=300, error_on_bad_status=False):
         if not url:
@@ -272,3 +273,4 @@ class Singul():
             raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
         return respdata
+
