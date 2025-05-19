@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
@@ -27,8 +28,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install build twine==6.0.1
         
-    - name: Build package
-      run: python -m build
+    - name: Build shufflepy 
+      run: python -m build build_shufflepy 
+      
+    - name: Publish package with Twine
+      run: |
+        python -m twine upload dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        TWINE_REPOSITORY_URL: https://upload.pypi.org/legacy/
+        ACTIONS_STEP_DEBUG: true  # Enables debug mode for this step
+
+    - name: Build singul 
+      run: python -m build build_singul 
       
     - name: Publish package with Twine
       run: |

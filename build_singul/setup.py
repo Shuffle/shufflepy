@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='shufflepy',  # Name of the package
-    version='0.1.0',  # Version number
-    description='Use Singul to connect to API with a single line of code',  
+    name='singul',  # Name of the package
+    version='0.1.1',  # Version number
+    description='Connect to your favorite services with a singul line of code. Now runable locally.',  
     long_description=open('README.md').read(),  
     long_description_content_type='text/markdown',  
     author='Fredrik Saito Odegaardstuen',  
