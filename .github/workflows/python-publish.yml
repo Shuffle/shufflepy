@@ -29,7 +29,10 @@ jobs:
         pip install build twine==6.0.1
 
     - name: Build singul 
-      run: python -m build build_singul 
+      run: |
+        # Rename the shufflepy directory to singul
+        python -c "import os; os.rename('shufflepy', 'singul')"
+        python -m build build_singul 
       
     - name: Publish package with Twine
       run: |
@@ -41,7 +44,10 @@ jobs:
         ACTIONS_STEP_DEBUG: true  # Enables debug mode for this step
         
     - name: Build shufflepy 
-      run: python -m build build_shufflepy 
+      run: |
+        # Rename the singul directory back to shufflepy
+        python -c "import os; os.rename('singul', 'shufflepy')"
+        python -m build build_shufflepy 
       
     - name: Publish package with Twine
       run: |
