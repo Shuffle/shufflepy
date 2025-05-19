@@ -33,7 +33,7 @@ jobs:
       
     - name: Publish package with Twine
       run: |
-        python -m twine upload dist/*
+        python -m twine upload build_shufflepy/dist/*
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
@@ -45,7 +45,7 @@ jobs:
       
     - name: Publish package with Twine
       run: |
-        python -m twine upload dist/*
+        python -m twine upload build_singul/dist/*
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
