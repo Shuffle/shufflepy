@@ -1,6 +1,5 @@
 ---
 icon: cube
----
 
 # Other Module
 

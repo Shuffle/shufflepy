@@ -24,6 +24,7 @@ Browse available apps supported by Shuffle:[Search for apps here](https://shuffl
 
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
+
 You’ll find integrations for tools like:
 
 * Jira

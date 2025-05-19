@@ -3,6 +3,10 @@ import requests
 import http.client
 import json
 
+import datetime
+
+from .standalone import Standalone
+
 from shufflepy.communication import Communication
 from shufflepy.siem import SIEM
 from shufflepy.eradication import Eradication
@@ -16,33 +20,38 @@ from shufflepy.other import Other
 http.client._MAXLINE = 524288
 
 class Singul():
+
     # High default timeout due to autocorrect possibly taking time
-    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=120):
-        if not url:
-            raise ValueError("url is required")
+    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=300, error_on_bad_status=False, standalone=False):
+        if not standalone:
+            if not url:
+                raise ValueError("url is required")
 
-        if len(execution_id) == 0 and os.getenv("EXECUTIONID"):
-            if os.getenv("DEBUG") == "true":
-                print("Using execution_id '%s' and exec auth '%s'" % (os.getenv("EXECUTIONID"), os.getenv("AUTHORIZATION")))
+            if len(execution_id) == 0 and os.getenv("EXECUTIONID"):
+                if os.getenv("DEBUG") == "true":
+                    print("Using execution_id '%s' and exec auth '%s'" % (os.getenv("EXECUTIONID"), os.getenv("AUTHORIZATION")))
 
-            execution_id = os.getenv("EXECUTIONID")
+                execution_id = os.getenv("EXECUTIONID")
+
+                if not auth:
+                    auth = os.getenv("AUTHORIZATION")
 
             if not auth:
-                auth = os.getenv("AUTHORIZATION")
+                authkey = os.getenv('SHUFFLE_AUTHORIZATION')
+                if not authkey:
+                    raise ValueError("Required: SHUFFLE_AUTHORIZATION environment key OR auth=apikey")
 
-        if not auth:
-            authkey = os.getenv('SHUFFLE_AUTHORIZATION')
-            if not authkey:
-                raise ValueError("Required: SHUFFLE_AUTHORIZATION environment key OR auth=apikey")
-
-            auth = authkey
+                auth = authkey
 
         self.config = {
             "url": url,
             "auth": auth,
             "execution_id": execution_id,
         }
+        
+        self.error_on_bad_status = error_on_bad_status
 
+        self.standalone = standalone
         self.org_id = ""
         self.verify = verify
         self.timeout = timeout
@@ -73,6 +82,15 @@ class Singul():
             parsedheaders["Org-Id"] = self.org_id
 
         return parsedheaders
+
+    def remove_binary(self):
+        standalone = Standalone()
+        path = standalone.get_executable_path()
+
+        if os.path.isfile(path):
+            os.remove(path)
+        else:
+            print("File not found: %s" % path)
 
     def run_workflow(self, workflow_id="", start_command="", wait=True, runtime_argument="", execution_argument="", startnode="", org_id="", auth="", auth_id="", authentication_id=""):
         # Check if UUID length
@@ -121,7 +139,7 @@ class Singul():
             timeout=self.timeout,
         )
 
-        if response.status_code != 200:
+        if (response.status_code != 200) and self.error_on_bad_status:
             raise ValueError(f"Status Error ({response.status_code}): {response.text}")
 
         try:
@@ -187,7 +205,7 @@ class Singul():
             timeout=self.timeout,
         )
 
-        if response.status_code != 200:
+        if response.status_code != 200 and self.error_on_bad_status:
             raise ValueError(f"Status Error ({response.status_code}): {response.text}")
 
         try:
@@ -199,7 +217,15 @@ class Singul():
         except Exception as e:
             raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
+    def run(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, **kwargs):
+        return connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
+
+
     def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, **kwargs):
+        if self.standalone:
+            standalone = Standalone()
+            return standalone.connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
+
         if not category and not app:
             raise ValueError("category or app is required. Example: app=\"jira\"")
 
@@ -223,6 +249,10 @@ class Singul():
 
         if params and not fields:
             fields = params
+
+        for key in kwargs:
+            if key not in newfields:
+                newfields[key] = kwargs[key]
 
         if fields:
             requestdata["fields"] = fields
@@ -249,8 +279,6 @@ class Singul():
                 parsedurl += f"?execution_id={self.config['execution_id']}&authorization={self.config['auth']}"
             
             
-        print("Sending request data: %s" % requestdata)
-
         response = requests.post(
             parsedurl, 
             json=requestdata, 
@@ -259,7 +287,7 @@ class Singul():
             timeout=self.timeout,
         )
 
-        if response.status_code != 200:
+        if response.status_code != 200 and self.error_on_bad_status:
             raise ValueError(f"Status Error ({response.status_code}): {response.text}")
 
         try:
@@ -268,44 +296,3 @@ class Singul():
             raise ValueError(f"Json Error ({response.status_code}): {response.text}")
 
         return respdata
-
-if __name__ == "__main__":
-    import os
-    shuffle = Singul(
-        os.environ.get("SHUFFLE_AUTHORIZATION"),
-        # "https://shuffler.io",
-        "http://localhost:5002",
-    )
-    
-    # shuffle.config["url"] = "https://e100-122-164-127-83.ngrok-free.app"
-
-    try:
-        resp = shuffle.intel.search_ioc(
-            app="virustotal_v3",
-            org_id=os.environ.get("SHUFFLE_ORG_ID"),
-            fields=[{
-                "key": "domain",
-                "value": "www.infopercept.com",
-            }]
-        )
-        
-        print(resp)
-        
-        # resp = shuffle.communication.get_contact(
-        #     app="teams",
-        #     org_id=os.environ.get("SHUFFLE_ORG_ID"),
-        #     fields=[
-        #         {
-        #             "key": "to",
-        #             "value": "aditya@shuffler.io"
-        #         },
-        #         {
-        #             "value": "shuffleplaybook@infopercept.com",
-        #             "key": "from"
-        #         }
-        #     ]
-        # )
-        
-        # print(resp)
-    except Exception as e:
-        print(e)

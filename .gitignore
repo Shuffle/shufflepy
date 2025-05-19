@@ -1,6 +1,9 @@
-*.swp
-*.swo
-*.swt
-*.swz
 *.pyc
-*egg-info
+tests*
+*egg-info*
+
+*.swo
+*.swp
+*.swn
+
+.DS_Store
