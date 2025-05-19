@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='shufflepy',   # Name of the package
-    version='0.1.1',    # Version number
+    version='0.1.2',    # Version number
     description='Use Shufflepy to control Shuffle and Singul', 
-    #long_description=open('../README.md').read(),  
+    long_description=import requests;str(requests.get("https://raw.githubusercontent.com/Shuffle/shufflepy/refs/heads/main/README.md").text),
     long_description_content_type='text/markdown',  
     author='Fredrik Saito Odegaardstuen',  
     author_email='frikky@shuffler.io',  
