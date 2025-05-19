@@ -1,5 +1,5 @@
 # Shufflepy
-Connect to your favorite services with a single line of code. 
+Connect to your favorite services with a Singul line of code. 
 
 **This Library is in an Experimental Phase, [released under pypi](https://pypi.org/project/shufflepy/)**
 
