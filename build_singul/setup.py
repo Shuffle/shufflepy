@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 def get_long_description():
-    import requests
-
     try:
+        import requests
+
         url = "https://raw.githubusercontent.com/shuffle/singul/main/README.md"
         response = requests.get(url, timeout=5)
         response.raise_for_status()
