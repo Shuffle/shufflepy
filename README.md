@@ -1,4 +1,4 @@
-# Shufflepy ( and Singulpy
+# Shufflepy (and Singul for Python)
 Connect to your favorite services with a Singul line of code. 
 
 This documentation will help you get started with Singul, understand its capabilities, and integrate it into your workflows easily. Whether you're a developer, a security analyst, or an automation engineer — **Singul is built for you.**
