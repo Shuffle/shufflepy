@@ -28,7 +28,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install build twine==6.0.1
         cp -r shufflepy build_shufflepy/shufflepy
-        cp -r singul build_singul/singul
+        cp -r shufflepy build_singul/singul
 
     - name: Build singul 
       run: |
