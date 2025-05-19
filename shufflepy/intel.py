@@ -4,6 +4,8 @@ class Intel(BaseCategory):
     def __init__(self, singul):
         super().__init__(singul)
         self.category = "intel"
+    
+    # We only need one method to fetch IOC data, since both 'search' and 'get' perform the same operation.
         
     def get_ioc(self, app="", org_id="", fields=[], auth_id=""):
         return self._connect(
@@ -23,6 +25,7 @@ class Intel(BaseCategory):
             auth_id=auth_id
         )
 
+    # Cannot create the IOC because it was created by the Virustotal integration
     def create_ioc(self, app="", org_id="", fields=[], auth_id=""):
         return self._connect(
             action="create_ioc",
@@ -32,6 +35,7 @@ class Intel(BaseCategory):
             auth_id=auth_id
         )
 
+    # Update method is required because we can update the IOC
     def update_ioc(self, app="", org_id="", fields=[], auth_id=""):
         return self._connect(
             action="update_ioc",
@@ -41,6 +45,7 @@ class Intel(BaseCategory):
             auth_id=auth_id
         )
 
+    # Cannot delete the IOC because it is managed by Virustotal, so delete is not allowed
     def delete_ioc(self, app="", org_id="", fields=[], auth_id=""):
         return self._connect(
             action="delete_ioc",

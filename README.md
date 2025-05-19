@@ -1,16 +1,11 @@
-# Shufflepy
+# Shufflepy (& Singulpy)
 Connect to your favorite services with a Singul line of code. 
 
-**This Library is in an Experimental Phase, [released under pypi](https://pypi.org/project/shufflepy/)**
+# Singul
 
-## Installation
-```bash
-pip install shufflepy
-```
+Welcome to the official documentation for **Singul** — an AI-powered agent API designed to connect your tools using simple and smart API calls.
 
-## Configuration
-```python
-from shufflepy import Singul 
+This documentation will help you get started with Singul, understand its capabilities, and integrate it into your workflows easily. Whether you're a developer, a security analyst, or an automation engineer — **Singul is built for you.**
 
 ## If the config is not specified, the library will use `https://shuffler.io` as the default URL. You must specify an apikey. 
 singul = Singul(
@@ -19,10 +14,7 @@ singul = Singul(
 )
 ```
 
-## Requirements
-- [An API-key for Shuffle](https://shuffler.io/settings)
-- Having an active authentication for the service you are trying to connect to in Shuffle, whether in your own instance or in the Shuffle cloud: [https://shuffler.io](https://shuffler.io/admin?tab=app_auth). This will be added to the future Shuffle CLI, and is also doable with the [App Authentication API](https://shuffler.io/docs/API#add-app-authentication). 
-- **If onprem**: [A Shuffle instance](https://github.com/shuffle/shuffle).
+**Singul** is an AI agent API that allows you to send actions to tools like Jira, Outlook, Gmail, TheHive, SIEM/SOAR platforms, and more — all through a simple HTTP API.
 
 ## Usage
 Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING. By default returns the [matching translation standard](https://github.com/Shuffle/standards/tree/main/translation_standards) if available, otherwise the raw output.
@@ -57,14 +49,18 @@ resp = singul.cases.list_tickets(
 	}]
 )
 
-print(resp)
+### Common Use Cases
 
 # General transformer - Transforms from any data into a standard, e.g. "list_tickets"
 sourcedata = [{"title": "Tickettitle", "id": "hiya"}]
 tickets = singul.transform(sourcedata, "list_tickets") # (coming soon)
 
-print(tickets)
-```
+* Send emails using **Outlook or Gmail**
+* Fetch and manage tickets from **Jira, GitHub, or TheHive**
+* Pull alerts from **SIEM or SOAR platforms**
+* Automate security investigations
+* Trigger workflow actions across tools
+* Build lightweight automation using simple APIs
 
 Basic output for `list_tickets`: 
 ```json
