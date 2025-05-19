@@ -1,10 +1,20 @@
 from setuptools import setup, find_packages
 
+def get_long_description():
+    try:
+        url = "https://raw.githubusercontent.com/shuffle/shufflepy/main/README.md"
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        return response.text
+    except Exception as e:
+        print(f"Warning: failed to fetch remote README.md: {e}")
+        return "Singul package - CLI and library."
+
 setup(
     name='shufflepy',   # Name of the package
     version='0.1.2',    # Version number
     description='Use Shufflepy to control Shuffle and Singul', 
-    long_description=import requests;str(requests.get("https://raw.githubusercontent.com/Shuffle/shufflepy/refs/heads/main/README.md").text),
+    long_description=get_long_description(),  
     long_description_content_type='text/markdown',  
     author='Fredrik Saito Odegaardstuen',  
     author_email='frikky@shuffler.io',  
