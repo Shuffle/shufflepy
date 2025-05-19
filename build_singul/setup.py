@@ -4,7 +4,7 @@ setup(
     name='singul',  # Name of the package
     version='0.1.1',  # Version number
     description='Connect to your favorite services with a singul line of code. Now runable locally.',  
-    long_description=open('README.md').read(),  
+    long_description=open('../README.md').read(),  
     long_description_content_type='text/markdown',  
     author='Fredrik Saito Odegaardstuen',  
     author_email='frikky@shuffler.io',  
