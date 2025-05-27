@@ -22,7 +22,13 @@ http.client._MAXLINE = 524288
 class Singul():
 
     # High default timeout due to autocorrect possibly taking time
-    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=300, error_on_bad_status=False, standalone=False):
+    def __init__(self, auth="", url="https://shuffler.io", execution_id="", verify=True, timeout=300, error_on_bad_status=False, standalone=False, api_key="", apikey=""):
+        if len(api_key) > 0 and not auth:
+            auth = api_key
+
+        if len(apikey) > 0 and not auth:
+            auth = apikey
+
         if not standalone:
             if not url:
                 raise ValueError("url is required")
