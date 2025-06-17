@@ -227,7 +227,7 @@ class Singul():
         return connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
 
 
-    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, **kwargs):
+    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, skip_authentication=False, **kwargs):
         if self.standalone:
             standalone = Standalone()
             return standalone.connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
@@ -277,6 +277,9 @@ class Singul():
 
         if authentication_id:
             requestdata["authentication_id"] = authentication_id
+        
+        if skip_authentication:
+            requestdata["skip_authentication"] = skip_authentication
 
         if self.config["execution_id"]:
             if "?" in parsedurl:
