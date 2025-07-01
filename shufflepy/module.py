@@ -227,7 +227,7 @@ class Singul():
         return connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
 
 
-    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, skip_authentication=False, **kwargs):
+    def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, environment="", skip_authentication=False, **kwargs):
         if self.standalone:
             standalone = Standalone()
             return standalone.connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
@@ -257,11 +257,14 @@ class Singul():
             fields = params
 
         for key in kwargs:
-            if key not in newfields:
-                newfields[key] = kwargs[key]
+            if key not in fields:
+                fields[key] = kwargs[key]
 
         if fields:
             requestdata["fields"] = fields
+            
+        if environment:
+            requestdata["environment"] = environment
 
         if app:
             requestdata["app"] = app
