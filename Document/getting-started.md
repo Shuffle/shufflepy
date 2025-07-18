@@ -54,11 +54,17 @@ After authenticating your app in Shuffle, you can now fetch data or trigger acti
 
 Here’s a **classical example** of how to use the Singul SDK to list tickets from an app like **Jira**, **GitHub**, or any other supported case/ticketing platform.
 
+Note: If you're on any other region, Please use it's respective API, else Singul would behave weirdly:
+- For US: https://california.shuffler.io
+- For Canada: https://ca.shuffler.io
+- For EU-2: https://frankfurt.shuffler.io
+- For Austrailia: https://au.shuffler.io
+
 ```python
 from shufflepy import Singul
 
 # Initialize Singul SDK with your API key and base URL
-singul = Singul(api_key="YOUR_API_KEY", base_url="https://singul.io")
+singul = Singul(api_key="YOUR_API_KEY", base_url="https://shuffler.io")
 
 try:
     # Call the list_tickets action from the Cases module
