@@ -1,4 +1,4 @@
-# Shufflepy (and Singul for Python)
+# Shuffle and Singul agentic API
 Connect to your favorite services with a Singul line of code. 
 
 This documentation will help you get started with Singul, understand its capabilities, and integrate it into your workflows easily. Whether you're a developer, a security analyst, or an automation engineer — **Singul is built for you.**
@@ -6,6 +6,18 @@ This documentation will help you get started with Singul, understand its capabil
 **Singul** is an API handler that allows you to get or update data in tools like Jira, Outlook, Gmail, Service Now, and more - with a single line of code.
 
 ## Usage
+Run AI Agent: `run_agent("action to perform")`
+```python
+from shufflepy import Singul
+
+singul = Singul(
+    "APIKEY"
+)
+
+singul.run_agent("Handle my emails from yesterday so I don't have to")
+```
+
+
 Sample functions below. If none of these match, try to use the shuffle.connect() function to run ANYTHING. By default returns the [matching translation standard](https://github.com/Shuffle/standards/tree/main/translation_standards) if available, otherwise the raw output.
 ```python
 from shufflepy import Singul 
