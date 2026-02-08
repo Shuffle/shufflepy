@@ -14,7 +14,7 @@ def get_long_description():
 
 setup(
     name='singul',      # Name of the package
-    version='2.0.0',    # Version number
+    version='0.2.1',    # Version number
     description='Connect to your favorite services with a singul line of code. Now runable locally.',  
     long_description=get_long_description(),  
     long_description_content_type='text/markdown',  

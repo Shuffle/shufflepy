@@ -250,7 +250,6 @@ class Singul():
         if org_id: 
             parsedheaders["Org-Id"] = org_id
 
-        self.config["category"] = category
         requestdata = {
             "app_id": "shuffle_agent",
             "app_name": "AI Agent",
