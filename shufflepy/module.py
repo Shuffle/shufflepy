@@ -226,6 +226,69 @@ class Singul():
     def run(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, **kwargs):
         return connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
 
+    def run_agent(self, ai_action, environment="", appname="", allowe_actions=""):
+        if self.standalone:
+            standalone = Standalone()
+            return standalone.run_agent()
+
+        if len(ai_action) < 5:
+            raise ValueError("user_action is required and must be at least 5 characters in length")
+
+        if environment == "":
+            environment = "cloud"
+        if appname == "":
+            appname = "openai"
+        if allowed_actions == "":
+            allowed_actions = "API"
+
+        # This API's URL is silly 
+        parsedurl = self.config["url"]
+        if not "/api/v1/" in parsedurl:
+            parsedurl += "/api/v1/apps/agent/run"
+
+        parsedheaders = self.get_headers()
+        if org_id: 
+            parsedheaders["Org-Id"] = org_id
+
+        self.config["category"] = category
+        requestdata = {
+            "app_id": "shuffle_agent",
+            "app_name": "AI Agent",
+            "app_version": "1.0.0",
+            "environment": environment,
+            "name": "agent",
+            "parameters": [{
+                "name": "appname",
+                "value": appname,
+            },
+            {
+                "name": "input",
+                "value": ai_action,
+            },
+            {
+                "name": "action",
+                "value": allowed_actions,
+            }]
+        }
+
+        response = requests.post(
+            parsedurl, 
+            json=requestdata, 
+            headers=parsedheaders,
+            verify=self.verify,
+            timeout=self.timeout,
+        )
+
+        if response.status_code != 200 and self.error_on_bad_status:
+            raise ValueError(f"Status Error ({response.status_code}): {response.text}")
+
+        try:
+            respdata = response.json()
+        except:
+            raise ValueError(f"Json Error ({response.status_code}): {response.text}")
+
+        return respdata
+
 
     def connect(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, environment="", skip_authentication=False, **kwargs):
         if self.standalone:

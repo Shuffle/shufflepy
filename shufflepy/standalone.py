@@ -281,3 +281,6 @@ class Standalone():
             raise ValueError("Singul executable is not executable: %s. Please run chmod +x or similar to make it possible to run it." % path)
 
         return self.run_singul(path, app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
+
+    def run_agent(self, input_data): 
+        return "Not implemented yet"
