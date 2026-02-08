@@ -226,7 +226,7 @@ class Singul():
     def run(self, app="", action="", org_id="", category="", skip_workflow=True, auth_id="", authentication_id="", fields=[], params={}, **kwargs):
         return connect(app=app, action=action, org_id=org_id, category=category, skip_workflow=skip_workflow, auth_id=auth_id, authentication_id=authentication_id, fields=fields, params=params, **kwargs)
 
-    def run_agent(self, ai_action, environment="", appname="", allowed_actions=""):
+    def run_agent(self, ai_action, environment="", appname="", allowed_actions="", org_id=""):
         if self.standalone:
             standalone = Standalone()
             return standalone.run_agent()

@@ -13,7 +13,7 @@ def get_long_description():
 
 setup(
     name='shufflepy',   # Name of the package
-    version='0.2.1',    # Version number
+    version='0.2.2',    # Version number
     description='Use Shufflepy to control Shuffle and Singul', 
     long_description=get_long_description(),  
     long_description_content_type='text/markdown',  
